@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" data-boot-state="loading">
+  <head>
+    <meta charset="UTF-8" />
+    <script>(()=>{const all={"en":{"title":"Tilt Puzzle","loading":"Preparing your puzzle…","label":"Loading {title}","error":"The puzzle could not start. Please try again.","retry":"Try again","errorLabel":"{title} could not start","javascript":"Please enable JavaScript to play {title}."},"ko":{"title":"틸트 퍼즐","loading":"퍼즐을 준비하고 있어요…","label":"{title} 불러오는 중","error":"퍼즐을 시작하지 못했습니다. 다시 시도해 주세요.","retry":"다시 시도","errorLabel":"{title} 시작 실패","javascript":"{title}을 플레이하려면 JavaScript를 활성화해 주세요."},"ja":{"title":"チルトパズル","loading":"パズルを準備しています…","label":"{title}を読み込み中","error":"パズルを開始できませんでした。もう一度お試しください。","retry":"もう一度試す","errorLabel":"{title}を開始できませんでした","javascript":"{title}をプレイするにはJavaScriptを有効にしてください。"},"zh-Hans":{"title":"倾转谜方","loading":"正在准备谜题…","label":"正在加载{title}","error":"无法启动谜题，请重试。","retry":"重试","errorLabel":"无法启动{title}","javascript":"请启用JavaScript以游玩{title}。"},"zh-Hant":{"title":"傾轉謎方","loading":"正在準備謎題…","label":"正在載入{title}","error":"無法啟動謎題，請重試。","retry":"重試","errorLabel":"無法啟動{title}","javascript":"請啟用JavaScript以遊玩{title}。"},"es":{"title":"Tilt Puzzle","loading":"Preparando tu puzle…","label":"Cargando {title}","error":"No se pudo iniciar el puzle. Inténtalo de nuevo.","retry":"Reintentar","errorLabel":"No se pudo iniciar {title}","javascript":"Activa JavaScript para jugar a {title}."},"pt-BR":{"title":"Tilt Puzzle","loading":"Preparando seu quebra-cabeça…","label":"Carregando {title}","error":"Não foi possível iniciar o quebra-cabeça. Tente novamente.","retry":"Tentar novamente","errorLabel":"Não foi possível iniciar {title}","javascript":"Ative o JavaScript para jogar {title}."},"de":{"title":"Tilt Puzzle","loading":"Dein Rätsel wird vorbereitet…","label":"{title} wird geladen","error":"Das Rätsel konnte nicht gestartet werden. Versuche es erneut.","retry":"Erneut versuchen","errorLabel":"{title} konnte nicht gestartet werden","javascript":"Aktiviere JavaScript, um {title} zu spielen."},"fr":{"title":"Tilt Puzzle","loading":"Préparation du casse-tête…","label":"Chargement de {title}","error":"Le casse-tête n'a pas pu démarrer. Réessaie.","retry":"Réessayer","errorLabel":"{title} n'a pas pu démarrer","javascript":"Active JavaScript pour jouer à {title}."},"id":{"title":"Tilt Puzzle","loading":"Menyiapkan teka-teki…","label":"Memuat {title}","error":"Teka-teki tidak dapat dimulai. Coba lagi.","retry":"Coba lagi","errorLabel":"{title} tidak dapat dimulai","javascript":"Aktifkan JavaScript untuk memainkan {title}."}},pick=function resolveLanguage(preferences){
+ const list=typeof preferences==='string'?[preferences]:Array.isArray(preferences)?preferences:[];
+ for(const raw of list){
+  if(typeof raw!=='string')continue;
+  const parts=raw.trim().replaceAll('_','-').toLowerCase().split('-'),base=parts[0];
+  if(base==='zh'){
+   if(parts.includes('hant'))return'zh-Hant';if(parts.includes('hans'))return'zh-Hans';
+   return parts.some(p=>['tw','hk','mo'].includes(p))?'zh-Hant':'zh-Hans';
+  };
+  if(base==='pt')return'pt-BR';
+  if(['en','ko','ja','es','de','fr','id'].includes(base))return base;
+ };
+ return'en';
+};let stored;try{stored=localStorage.getItem('tilt-puzzle-language-v1');}catch{}const preference=stored==='auto'||Object.hasOwn(all,stored)?stored:'auto';const language=preference==='auto'?pick(navigator.languages||[navigator.language]):preference;const text=all[language]||all.en;window.__tiltBootLocale={language,preference,text};document.documentElement.lang=language;function value(key){return text[key].replaceAll('{title}',text.title);}function apply(){const cover=document.querySelector('#opening'),hint=document.querySelector('.opening-hint');if(!cover||!hint)return false;const mark=cover.querySelector('.opening-wordmark');if(text.title==='Tilt Puzzle'){const span=document.createElement('span');span.textContent='Puzzle';mark.replaceChildren(document.createTextNode('Tilt '),span);}else mark.textContent=text.title;hint.textContent=text.loading;cover.querySelector('#opening-error').textContent=text.error;cover.querySelector('#opening-retry').textContent=text.retry;cover.setAttribute('aria-label',value(document.documentElement.dataset.bootState==='error'?'errorLabel':'label'));document.title=text.title;return true;}const observer=new MutationObserver(()=>{if(apply())observer.disconnect();});observer.observe(document.documentElement,{childList:true,subtree:true});if(apply())observer.disconnect();})();</script>
+    <script>
+      // Independent of the module graph: even a failed entry/CSS load can retry.
+      (()=>{
+        const root=document.documentElement;let last=performance.now(),visible=0,timer;
+        function retry(event){if(event.target?.id==='opening-retry'&&!root.hasAttribute('data-boot-managed'))location.reload();}
+        function visibility(){last=performance.now();}
+        function cleanup(removeRetry){clearTimeout(timer);window.removeEventListener('error',resourceError,true);window.removeEventListener('unhandledrejection',resourceError);document.removeEventListener('visibilitychange',visibility);if(removeRetry)document.removeEventListener('click',retry);}
+        function fail(){
+          if(root.dataset.bootState==='ready'||root.dataset.bootState==='error')return;
+          root.dataset.bootState='error';const text=window.__tiltBootLocale?.text;document.querySelector('#opening')?.setAttribute('aria-label',text?text.errorLabel.replaceAll('{title}',text.title):'Tilt Puzzle could not start');
+          document.querySelectorAll('link[rel="stylesheet"]').forEach(link=>link.remove());
+          document.dispatchEvent(new Event('tilt:opening-error'));cleanup(false);
+        }
+        function resourceError(event){
+          const target=event.target;
+          if(event.type==='unhandledrejection'||event.error||event.message||target?.tagName==='SCRIPT'||(target?.tagName==='LINK'&&target.rel==='stylesheet'))fail();
+        }
+        function tick(){
+          const now=performance.now();
+          if(root.dataset.bootState==='ready'){cleanup(true);return;}
+          if(root.hasAttribute('data-boot-managed'))return;
+          if(!document.hidden)visible+=Math.max(0,now-last);last=now;
+          if(visible>=15000){fail();return;}timer=setTimeout(tick,250);
+        }
+        document.addEventListener('click',retry);document.addEventListener('visibilitychange',visibility);
+        window.addEventListener('error',resourceError,true);window.addEventListener('unhandledrejection',resourceError);
+        document.addEventListener('tilt:opening-finished',()=>cleanup(true),{once:true});document.addEventListener('tilt:opening-failed',()=>cleanup(true),{once:true});
+        timer=setTimeout(tick,250);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f3ef" />
+    <meta name="description" content="Rotate the cube and guide the ball to the exit. Explore 100 gravity puzzles with keys and portals." />
+    <title>Tilt Puzzle</title>
+    <style>
+      html,body{margin:0;background:#f4f3ef}
+      html[data-boot-state="loading"] .app,html[data-boot-state="error"] .app{visibility:hidden!important}
+      html:not([data-boot-state="ready"]) .app{pointer-events:none!important}
+      #opening{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:#f4f3ef;color:#202127;font-family:'DM Sans',system-ui,sans-serif;isolation:isolate}
+      .opening-content{display:flex;flex-direction:column;align-items:center;text-align:center;padding:24px}
+      #opening svg{fill:none;stroke:none}
+      .opening-mark{display:block;width:176px;height:176px;overflow:visible;transform-origin:50% 55%;animation:opening-settle .7s cubic-bezier(.2,.75,.2,1) both}
+      .opening-wire{stroke-dasharray:1;stroke-dashoffset:1;animation:opening-draw .4s .04s ease-out forwards}
+      .opening-blocks{opacity:0;animation:opening-appear .25s .17s ease-out forwards}
+      .opening-ball{opacity:0;transform-box:fill-box;transform-origin:center;animation:opening-roll .42s .17s cubic-bezier(.2,.75,.2,1) forwards}
+      .opening-exit{opacity:0;animation:opening-exit .3s .38s ease-out forwards}
+      .opening-wordmark{font-size:34px;font-weight:800;line-height:1.2;letter-spacing:-1.4px;margin:0;opacity:0;animation:opening-appear .24s .34s ease-out forwards}.opening-wordmark span{color:#3454e9}
+      .opening-hint{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));font-size:12px;color:#62636b;opacity:0;animation:opening-appear .2s 1.2s ease-out forwards}
+      #opening-error{display:none;max-width:280px;font-size:14px;line-height:1.5;margin:18px 0 0}
+      #opening-retry{display:none;margin-top:14px;border:1px solid #b8b9bf;border-radius:12px;padding:12px 22px;font:600 14px system-ui;background:#f4f3ef;color:#202127;cursor:pointer}
+      html[data-boot-state="leaving"] #opening{animation:opening-reveal .28s ease-in-out both}
+      html[data-boot-state="ready"] #opening{display:none}
+      html[data-boot-state="error"] #opening-error,html[data-boot-state="error"] #opening-retry{display:block}
+      html[data-boot-state="error"] .opening-hint{display:none}
+      html[data-boot-state="error"] #opening .opening-mark,html[data-boot-state="error"] #opening .opening-blocks,html[data-boot-state="error"] #opening .opening-ball,html[data-boot-state="error"] #opening .opening-exit,html[data-boot-state="error"] #opening .opening-wordmark{animation:none;opacity:1;transform:none}html[data-boot-state="error"] .opening-wire{animation:none;stroke-dashoffset:0}
+      html[data-boot-paused="true"] #opening,html[data-boot-paused="true"] #opening *{animation-play-state:paused!important}
+      @keyframes opening-draw{to{stroke-dashoffset:0}}@keyframes opening-appear{to{opacity:1}}
+      @keyframes opening-settle{from{transform:translateY(5px) rotate(-4deg) scale(.96)}to{transform:translateY(0) rotate(0) scale(1)}}
+      @keyframes opening-roll{from{opacity:0;transform:translate(-18px,-8px) scale(.82)}to{opacity:1;transform:translate(0,0) scale(1)}}
+      @keyframes opening-exit{0%{opacity:0;stroke-width:2}65%{opacity:1;stroke-width:3.4}100%{opacity:1;stroke-width:2.7}}
+      @keyframes opening-reveal{from{opacity:1}to{opacity:0}}
+      @media(prefers-reduced-motion:reduce){#opening .opening-mark,#opening .opening-blocks,#opening .opening-ball,#opening .opening-exit,#opening .opening-wordmark{animation:none;opacity:1;transform:none}.opening-wire{animation:none;stroke-dashoffset:0}html[data-boot-state="leaving"] #opening{animation-duration:.12s}}
+    </style>
+    <script type="module" crossorigin src="./assets/index--j5oKRgS.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Z4o74-ca.css">
+  </head>
+  <body>
+    <div id="opening" role="status" aria-label="Loading Tilt Puzzle" aria-live="polite">
+      <div class="opening-content">
+        <svg class="opening-mark" viewBox="20 20 68 72" aria-hidden="true">
+          <defs><linearGradient id="opening-white" x2=".8" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#d5dce7"/></linearGradient><radialGradient id="opening-blue" cx=".32" cy=".25" r=".8"><stop stop-color="#91a7ff"/><stop offset=".45" stop-color="#3454e9"/><stop offset="1" stop-color="#1c38b5"/></radialGradient></defs>
+          <g class="opening-blocks" fill="url(#opening-white)" stroke="#c4cddd" stroke-width=".5"><path d="M39 42 48 37 57 42 57 54 48 60 39 54Z"/><path d="M55 64 64 59 72 64 72 75 64 80 55 75Z"/></g>
+          <path class="opening-wire" pathLength="1" d="M31 43 53 30 77 42 77 68 54 82 31 68Z M31 43 54 56 77 42 M54 56 54 82 M53 30 53 54 M31 68 53 54 77 68" fill="none" stroke="#3454e9" stroke-width="1.45" stroke-linejoin="round"/>
+          <path class="opening-exit" d="M66 52C73 47 75 63 68 68C62 72 60 57 66 52Z" fill="none" stroke="#f06b3e" stroke-width="2.7"/>
+          <g class="opening-ball"><circle cx="44" cy="64" r="7" fill="url(#opening-blue)"/><ellipse cx="42" cy="61.5" rx="2.1" ry="1" fill="#fff" opacity=".45"/></g>
+        </svg>
+        <p class="opening-wordmark" data-brand-text>Tilt <span>Puzzle</span></p>
+        <p id="opening-error" role="alert" data-i18n="opening.error">The puzzle could not start. Please try again.</p><button id="opening-retry" type="button" data-i18n="opening.retry">Try again</button>
+        <noscript><p>Please enable JavaScript to play Tilt Puzzle.</p></noscript>
+      </div>
+      <span class="opening-hint" data-i18n="opening.loading">Preparing your puzzle…</span>
+    </div>
+    <main class="app" data-motion="idle" inert aria-hidden="true">
+      <header class="header">
+        <a class="wordmark" href="./" aria-label="Tilt Puzzle home" data-i18n-aria-label="ui.home">tilt<span></span></a>
+        <span class="edition">TILT PUZZLE<br><span id="header-chapter">CHAPTER / 01</span></span>
+        <div class="header-actions"><button id="privacy" class="icon-button" aria-label="Privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 4-4 7-8 9-4-2-8-5-8-9V6z"/><path d="m8 12 3 3 5-6"/></svg></button><button id="language" class="icon-button language-button" aria-label="Choose language" data-i18n-aria-label="ui.languageLabel"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></svg></button><button class="icon-button" id="sound" aria-label="Turn sound off" aria-pressed="true"></button></div>
+      </header>
+
+      <section class="heading">
+        <p class="eyebrow chapter-caption"><span></span><b id="chapter-caption">CH 01 · Gravity at Your Fingertips</b><em id="stage-progress">01 / 100</em></p>
+        <h1><span id="game-title" data-brand-text style="color:inherit">Tilt <span>Puzzle</span></span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 29 30 7M8 7h22v22"/></svg></h1>
+        <p class="description" id="stage-description">Rotate the cube. Reach the orange exit.</p>
+        <aside class="tutorial" id="tutorial" aria-label="Quick start guide" data-i18n-aria-label="ui.guideLabel" hidden>
+          <div class="tutorial-top"><span class="tutorial-topic">01 / 10 · ROTATE</span><button id="tutorial-skip" type="button" aria-label="Skip quick start guide" data-i18n-aria-label="ui.skipLabel"><span data-i18n="ui.skip">Skip</span><span aria-hidden="true">↗</span></button></div>
+          <div class="tutorial-content">
+            <svg class="tutorial-art" viewBox="0 0 64 64" aria-hidden="true">
+              <g class="lesson-rotate"><path d="m15 22 17-9 17 9v21l-17 9-17-9zM15 22l17 9 17-9M32 31v21"/><path class="tutorial-arrow" d="M8 15C18 2 45 3 56 17m-1-8 1 8-8-1"/></g>
+              <g class="lesson-wall"><path d="M10 43h43V14M48 14h10M48 23h10M48 32h10M48 41h10"/><circle class="tutorial-ball" cx="19" cy="34" r="6"/><path class="tutorial-arrow" d="M29 34h15m-5-5 5 5-5 5"/></g>
+              <g class="lesson-exit"><path d="M13 12h38v34H39m-14 0H13z"/><circle class="tutorial-ball" cx="32" cy="23" r="6"/><path class="tutorial-arrow" d="M32 34v24m-5-5 5 5 5-5"/><path class="tutorial-exit" d="M25 46h14"/></g>
+              <g class="lesson-key"><circle cx="18" cy="17" r="9"/><path d="M18 26v27m0-8h8m-8-8h8M40 14h15v38H40M45 20v26m5-26v26"/></g>
+              <g class="lesson-portal"><ellipse cx="14" cy="32" rx="9" ry="19"/><ellipse cx="50" cy="32" rx="9" ry="19"/><path class="tutorial-arrow" d="M26 32h12m-5-5 5 5-5 5"/><circle class="tutorial-ball" cx="14" cy="32" r="4"/></g>
+              <g class="lesson-combo"><circle cx="17" cy="13" r="6"/><path d="M17 19v15m0-6h6M28 15h22"/><ellipse cx="16" cy="48" rx="7" ry="12"/><ellipse cx="49" cy="48" rx="7" ry="12"/><path class="tutorial-arrow" d="M27 48h11m-4-4 4 4-4 4"/></g>
+            </svg>
+            <div class="tutorial-copy" role="status" aria-live="polite" aria-atomic="true"><h2>Grab. Tilt. Release.</h2><p class="tutorial-body">Drag the cube until it snaps to the next face.</p></div>
+          </div>
+          <div class="tutorial-bottom"><div class="tutorial-steps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="tutorial-tip">Arrow keys work too.</span></div>
+        </aside>
+        <button class="tutorial-open" id="tutorial-open" type="button" aria-controls="tutorial" hidden><span data-i18n="ui.quickGuide">Quick guide</span><span aria-hidden="true">↗</span></button>
+        <nav class="stage-route" id="stage-route" aria-label="Select stage" data-i18n-aria-label="ui.stageSelect"></nav>
+      </section>
+
+      <section class="play-area" aria-label="Drag to rotate the 3D puzzle" data-i18n-aria-label="ui.playArea">
+        <div class="stage-top"><span class="level-label"><b id="stage-number">01</b><span><span id="stage-name">First Turn</span><small id="stage-label">FIRST TURN</small></span></span><button id="peek" class="peek" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 8v9l-9 5-9-5V8zM3 8l9 5 9-5m-9 5v9M7 5.8l9 5"/></svg><span data-i18n="ui.lookInside">Look Inside</span></button></div>
+        <div class="stage-status"><span class="status" id="status" role="status" aria-live="polite"><i></i> Drag to rotate</span><span class="mechanic-badge" id="mechanic-badge">STAGE 01 / 100</span></div>
+        <svg class="motion-guide" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="156"/><path d="M200 31v13m0 312v13M31 200h13m312 0h13"/><path class="orbit" d="M65 278C-6 157 245 18 335 122s-45 222-169 199"/></svg>
+        <div class="scene" id="scene"><canvas id="game" tabindex="0" aria-label="Drag the cube to rotate. Arrow keys tilt, Q and E twist, Z undoes, and R restarts." data-i18n-aria-label="ui.canvas"></canvas></div>
+        <div class="grab-cursor" aria-hidden="true"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="23"/><circle class="grip-progress" cx="30" cy="30" r="23" pathLength="100"/><path d="M30 1v8m0 42v8M1 30h8m42 0h8"/></svg><span>GRAB</span></div>
+        <div class="snap-lock" id="snap-lock" aria-hidden="true"><svg viewBox="0 0 220 220"><circle cx="110" cy="110" r="76"/><path d="M25 58V25h33m104 0h33v33M25 162v33h33m104 0h33v-33"/><path class="snap-ticks" d="M110 15v14m81 81h14M110 191v14M15 110h14"/></svg><span>90<span>°</span><small>ALIGNED</small></span></div>
+        <div class="exit-ripple" id="exit-ripple" aria-hidden="true"><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+        <div class="stage-entry" id="stage-entry" aria-hidden="true"><span id="entry-number">02</span><small id="entry-name">A Little Detour</small></div>
+        <div class="rotation-track" aria-hidden="true"><span></span></div>
+        <div class="scene-label"><span><i class="legend-ball"></i><span data-i18n="ui.ball">Ball</span></span><span><i class="legend-exit"></i><span data-i18n="ui.exit">Exit</span></span></div>
+        <div class="position-map" id="position-map" role="img"><canvas width="100" height="100" aria-hidden="true"></canvas><span></span></div>
+        <div class="gesture-hint" id="gesture-hint"><svg viewBox="0 0 28 20" aria-hidden="true"><path d="m4 10 4-4M4 10l4 4M4 10h20m0 0-4-4m4 4-4 4"/></svg><span data-i18n="ui.gesture">Grab, rotate, release</span></div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+        <div class="complete" id="complete" hidden>
+          <div class="complete-mark" aria-hidden="true"><span>✳</span></div><p class="eyebrow" id="clear-caption">STAGE 01 CLEAR</p><h2 id="clear-title">First Turn<br><span>Clear!</span></h2><p id="result"></p><button id="next" class="primary">Next Stage <span>↗</span></button><button id="again" class="replay-button"><span data-i18n="ui.playAgain">Play Again</span> ↺</button>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="Turn count and puzzle controls" data-i18n-aria-label="ui.controls">
+        <div class="stat"><span class="stat-label" data-i18n="ui.turns">Turns</span><strong id="moves">00</strong></div>
+        <div class="dashboard-actions"><button class="tool" id="undo" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h7a6 6 0 0 1 0 12h-3M8 7l4-4M8 7l4 4"/></svg><span data-i18n="ui.undo">Undo</span></button><button class="tool" id="reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8a8 8 0 1 0 1 7M19 3v5h-5"/></svg><span data-i18n="ui.restart">Restart</span></button></div>
+      </section>
+    </main>
+  </body>
+</html>
